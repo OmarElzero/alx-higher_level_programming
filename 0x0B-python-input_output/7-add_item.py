@@ -3,14 +3,16 @@
 
 
 import sys
-save_to_json_file = __import__('5-save_to_json_file.py').save_to_json_file
-load_from_json_file = __import__('6-load_from_json_file.py').load_from_json_file
+holder1 = save_to_json_file
+holder2 = load_from_json_file
+save_to_json_file = __import__('5-save_to_json_file.py').holder1
+load_from_json_file = __import__('6-load_from_json_file.py').holder2
 
 arglist = list(sys.argv[1])
-try :
+try:
     old_data = load_from_json_file('add_item.json')
-except Exception :
+except Exception:
     old_data = []
-      
+
 old_data.extend(arglist)
-save_to_json_file(old_data,'add_item.json')
+save_to_json_file(old_data, 'add_item.json')
