@@ -2,5 +2,4 @@
 def read_file(filename=""):
     """reads filename with the utf-8"""
     with open(filename, encoding='utf-8') as file:
-        content = file.read()
-        print(content, end="")
+        print(file.read(), end="")
