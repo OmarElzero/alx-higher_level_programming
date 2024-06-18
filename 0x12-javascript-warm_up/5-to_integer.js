@@ -1,6 +1,6 @@
 #!/usr/bin/node
 
-const argsValue = process.argv[2]; 
+const argsValue = process.argv[2];
 
 if (Number.isInteger(parseInt(argsValue))) {
   console.log(`My number: ${parseInt(argsValue)}`);
