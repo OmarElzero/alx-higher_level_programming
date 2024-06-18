@@ -1,7 +1,7 @@
 #!/usr/bin/node
 
 if (process.argv.length <= 3) {
-  console.log(1);
+  console.log(0);
 } else {
   let max1 = -Infinity;
   let max2 = -Infinity;
@@ -17,4 +17,4 @@ if (process.argv.length <= 3) {
   }
 
   console.log(max2);
-} 
+}
