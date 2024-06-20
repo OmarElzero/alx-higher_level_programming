@@ -1,12 +1,13 @@
 #!/usr/bin/node
 const dict = require('./101-data').dict;
-const newDict = {};
+const dictCopy = dict;
+const newDictionery = {};
 
-Object.keys(dict).map (function (key, index) {
-  if (newDict[dict[key]] === undefined) {
-    newDict[dict[key]] = [];
+for (const userID in dictCopy) {
+  const occurence = dictCopy[userID];
+  if (!newDictionery[occurence]) {
+    newDictionery[occurence] = [];
   }
-  newDict[dict[key]].push(key);
-});
-
-console.log(newDict);
+  newDictionery[occurence].push(userID);
+}
+console.log(newDictionery);
