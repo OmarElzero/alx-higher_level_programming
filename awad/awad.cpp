@@ -216,6 +216,7 @@ for (int i = 0; i < ans1.size(); ++i) {
 }
     // read memory
     for (int j = 0; j < 64; ++j) {
+        QString f = "";
         for (int i = 1; i < 3; ++i) {
             QTableWidgetItem *item = ui->tableWidget->item(j, i);
             QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget->item(j, i - 1) : ui->tableWidget->item(j, i + 1);
@@ -223,14 +224,20 @@ for (int i = 0; i < ans1.size(); ++i) {
             if (item && item1) {
                 qDebug() << "Writing to memory:" << item1->text() << "->" << item->text();
                 controlunit.memory.write(item1->text().toStdString(), item->text().toStdString());
-                instrc[countt++]= item->text().toStdString();
+                
+                QString s= item->text();
+                f+=s;
+                
             } else {
                 qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
             }
         }
+        instrc[countt++]=f.toStdString();
+
     }
 
     for (int j = 0; j < 64; ++j) {
+        QString f = "";
         for (int i = 1; i < 3; ++i) {
             QTableWidgetItem *item = ui->tableWidget_2->item(j, i);
             QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget_2->item(j, i - 1) : ui->tableWidget_2->item(j, i + 1);
@@ -238,11 +245,14 @@ for (int i = 0; i < ans1.size(); ++i) {
             if (item && item1) {
                 qDebug() << "Writing to memory:" << item1->text() << "->" << item->text();
                 controlunit.memory.write(item1->text().toStdString(), item->text().toStdString());
-                instrc[countt++]= item->text().toStdString();
+                QString s= item->text();
+                f+=s;
+               
             } else {
                 qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
             }
         }
+        instrc[countt++]=f.toStdString();
     }
 
     // read register
