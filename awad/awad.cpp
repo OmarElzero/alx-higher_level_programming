@@ -295,7 +295,13 @@ void MainWindow::on_omar_clicked()
     read_m();
     read_r();
     controlunit.loadProgram(instrc);
-    controlunit.executeNext();
+     while (true) {
+        controlunit.executeNext();
+        if (controlunit.programCounter >= controlunit.instructions.size()) {
+            break; 
+        }
+    
+     }
     print_m();
     print_r();
     qDebug() << "Button clicked: on_omar_clicked()";
