@@ -90,7 +90,7 @@ MainWindow::~MainWindow()
 }
 
 
-   
+
 
 void MainWindow::fillTable() {
 
@@ -109,14 +109,12 @@ void MainWindow::fillTable() {
     ui->tableWidget->setColumnCount(colCount);
 
     for (int i = 0; i < 16; i++) {
-        for (int j = 0; j <2; j++) {
-            if (!ui->tableWidget_3->item(i, j)) {
-                ui->tableWidget_3->setItem(i, j, new QTableWidgetItem());
+            if (!ui->tableWidget_3->item(i, 1)) {
+                ui->tableWidget_3->setItem(i, 1, new QTableWidgetItem());
             }
-            Qstring s = "00";
+            QString s = "00";
             QTableWidgetItem *item1 = ui->tableWidget_3->item(i, 1);
             item1->setText(s);
-        }
     }
 
     for (int i = 0; i < 64; i++) {
@@ -124,7 +122,7 @@ void MainWindow::fillTable() {
             if (!ui->tableWidget_2->item(i, j)) {
                 ui->tableWidget_2->setItem(i, j, new QTableWidgetItem());
             }
-            Qstring s = "00";
+            QString s = "00";
             QTableWidgetItem *item1 = ui->tableWidget_2->item(i, j);
             item1->setText(s);
         }
@@ -135,7 +133,7 @@ void MainWindow::fillTable() {
             if (!ui->tableWidget->item(i, j)) {
                 ui->tableWidget->setItem(i, j, new QTableWidgetItem());
             }
-            Qstring s = "00";
+            QString s = "00";
             QTableWidgetItem *item1 = ui->tableWidget->item(i, j);
             item1->setText(s);
         }
@@ -200,6 +198,22 @@ void MainWindow::fillTable() {
 
 void MainWindow::on_omar_clicked()
 {
+map<int, string> mp;
+vector<string> v1 {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
+vector<string> ans1;
+
+for (int i = 0; i < v1.size(); ++i) {
+    for (int j = 0; j < v1.size(); ++j) {
+        string s;
+        s += v1[i];
+        s += v1[j];
+        ans1.push_back(s);
+    }
+}
+
+for (int i = 0; i < ans1.size(); ++i) {
+    mp[i] = ans1[i];
+}
     // read memory
     for (int j = 0; j < 64; ++j) {
         for (int i = 1; i < 3; ++i) {
@@ -216,7 +230,7 @@ void MainWindow::on_omar_clicked()
         }
     }
 
-     for (int j = 0; j < 64; ++j) {
+    for (int j = 0; j < 64; ++j) {
         for (int i = 1; i < 3; ++i) {
             QTableWidgetItem *item = ui->tableWidget_2->item(j, i);
             QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget_2->item(j, i - 1) : ui->tableWidget_2->item(j, i + 1);
@@ -246,17 +260,17 @@ void MainWindow::on_omar_clicked()
     }
 
     controlunit.loadProgram(instrc);
-     while (true) {
+    while (true) {
         controlunit.executeNext();
         if (controlunit.programCounter >= controlunit.instructions.size()) {
-            break; 
+            break;
         }
-    
-     }
-   
-   // print memory
 
-   for (int j = 0; j < 64; ++j) {
+    }
+
+    // print memory
+
+    for (int j = 0; j < 64; ++j) {
         for (int i = 1; i < 3; ++i) {
             QTableWidgetItem *item = ui->tableWidget->item(j, i);
             QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget->item(j, i - 1) : ui->tableWidget->item(j, i + 1);
@@ -286,37 +300,27 @@ void MainWindow::on_omar_clicked()
         }
     }
 
+
+
+// print register
+for (int i = 0; i < 16; ++i) {
+    QTableWidgetItem *item1 = ui->tableWidget_3->item(i, 1);
+    if (item1) {
+        QString temp = QString::fromStdString(controlunit.reg.read(regs[i]));
+        qDebug() << "Read from register:" << regs[i] << "->" << temp;
+        item1->setText(temp);
+    } else {
+        qDebug() << "Null item found at tableWidget_3(" << i << ", 1)";
+    }
 }
 
-    // print register
-for (int i = 0; i < 16; ++i) {
-        QTableWidgetItem *item1 = ui->tableWidget_3->item(i, 1);
-        if (item1) {
-            QString temp = QString::fromStdString(controlunit.reg.read(regs[i]));
-            qDebug() << "Read from register:" << regs[i] << "->" << temp;
-            item1->setText(temp);
-        } else {
-            qDebug() << "Null item found at tableWidget_3(" << i << ", 1)";
-        }
-    }
 
+qDebug() << "Button clicked: on_omar_clicked()";
 
-    qDebug() << "Button clicked: on_omar_clicked()";
-    map<int, string> mp;
-    vector<string> v1 {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
-    vector<string> ans1;
+for (int i = 0; i < controlunit.instructions.size();i++)
+{
+     qDebug() << "instructions array (" << instrc[i] << ")";
+}
 
-    for (int i = 0; i < v1.size(); ++i) {
-        for (int j = 0; j < v1.size(); ++j) {
-            string s;
-            s += v1[i];
-            s += v1[j];
-            ans1.push_back(s);
-        }
-    }
-
-    for (int i = 0; i < ans1.size(); ++i) {
-        mp[i] = ans1[i];
-    }
 
 }
