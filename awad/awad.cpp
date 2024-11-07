@@ -89,7 +89,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void read_m(){
+void MainWindow::read_m(){
  for (int j = 0; j < 64; ++j) {
         for (int i = 1; i < 3; ++i) {
             QTableWidgetItem *item = ui->tableWidget->item(j, i);
@@ -121,7 +121,7 @@ void read_m(){
     }
 }
 
-void print_m(){
+void MainWindow::print_m(){
 
 for (int j = 0; j < 64; ++j) {
         for (int i = 1; i < 3; ++i) {
@@ -155,7 +155,7 @@ for (int j = 0; j < 64; ++j) {
 
 }
 
-void read_r(){
+void MainWindow::read_r(){
      vector<char> regs {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     for (int i = 0; i < 16; ++i) {
@@ -170,7 +170,7 @@ void read_r(){
 
 }
 
-void print_r(){
+void MainWindow::print_r(){
     vector<char> regs {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 for (int i = 0; i < 16; ++i) {
         QTableWidgetItem *item1 = ui->tableWidget_3->item(i, 1);
