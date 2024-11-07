@@ -89,101 +89,9 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::read_m(){
- for (int j = 0; j < 64; ++j) {
-        for (int i = 1; i < 3; ++i) {
-            QTableWidgetItem *item = ui->tableWidget->item(j, i);
-            QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget->item(j, i - 1) : ui->tableWidget->item(j, i + 1);
 
-            if (item && item1) {
-                qDebug() << "Writing to memory:" << item1->text() << "->" << item->text();
-                controlunit.memory.write(item1->text().toStdString(), item->text().toStdString());
-                instrc[countt++]= item->text().toStdString();
-            } else {
-                qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
-            }
-        }
-    }
+   
 
-     for (int j = 0; j < 64; ++j) {
-        for (int i = 1; i < 3; ++i) {
-            QTableWidgetItem *item = ui->tableWidget_2->item(j, i);
-            QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget_2->item(j, i - 1) : ui->tableWidget_2->item(j, i + 1);
-
-            if (item && item1) {
-                qDebug() << "Writing to memory:" << item1->text() << "->" << item->text();
-                controlunit.memory.write(item1->text().toStdString(), item->text().toStdString());
-                instrc[countt++]= item->text().toStdString();
-            } else {
-                qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
-            }
-        }
-    }
-}
-
-void MainWindow::print_m(){
-
-for (int j = 0; j < 64; ++j) {
-        for (int i = 1; i < 3; ++i) {
-            QTableWidgetItem *item = ui->tableWidget->item(j, i);
-            QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget->item(j, i - 1) : ui->tableWidget->item(j, i + 1);
-
-            if (item && item1) {
-                QString temp = QString::fromStdString(controlunit.memory.read(item1->text().toStdString()));
-                qDebug() << "Read from memory:" << item1->text() << "->" << temp;
-                item->setText(temp);
-            } else {
-                qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
-            }
-        }
-    }
-
-    for (int j = 0; j < 64; ++j) {
-        for (int i = 1; i < 3; ++i) {
-            QTableWidgetItem *item = ui->tableWidget_2->item(j, i);
-            QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget_2->item(j, i - 1) : ui->tableWidget_2->item(j, i + 1);
-
-            if (item && item1) {
-                QString temp = QString::fromStdString(controlunit.memory.read(item1->text().toStdString()));
-                qDebug() << "Read from memory:" << item1->text() << "->" << temp;
-                item->setText(temp);
-            } else {
-                qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
-            }
-        }
-    }
-
-}
-
-void MainWindow::read_r(){
-     vector<char> regs {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-
-    for (int i = 0; i < 16; ++i) {
-        QTableWidgetItem *item = ui->tableWidget_3->item(i, 1);
-        if (item) {
-            qDebug() << "Writing to register:" << regs[i] << "->" << item->text();
-            controlunit.reg.write(regs[i], item->text().toStdString());
-        } else {
-            qDebug() << "Null item found at tableWidget_3(" << i << ", 1)";
-        }
-    }
-
-}
-
-void MainWindow::print_r(){
-    vector<char> regs {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-for (int i = 0; i < 16; ++i) {
-        QTableWidgetItem *item1 = ui->tableWidget_3->item(i, 1);
-        if (item1) {
-            QString temp = QString::fromStdString(controlunit.reg.read(regs[i]));
-            qDebug() << "Read from register:" << regs[i] << "->" << temp;
-            item1->setText(temp);
-        } else {
-            qDebug() << "Null item found at tableWidget_3(" << i << ", 1)";
-        }
-    }
-
-}
 void MainWindow::fillTable() {
 
 
@@ -292,8 +200,51 @@ void MainWindow::fillTable() {
 
 void MainWindow::on_omar_clicked()
 {
-    read_m();
-    read_r();
+    // read memory
+    for (int j = 0; j < 64; ++j) {
+        for (int i = 1; i < 3; ++i) {
+            QTableWidgetItem *item = ui->tableWidget->item(j, i);
+            QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget->item(j, i - 1) : ui->tableWidget->item(j, i + 1);
+
+            if (item && item1) {
+                qDebug() << "Writing to memory:" << item1->text() << "->" << item->text();
+                controlunit.memory.write(item1->text().toStdString(), item->text().toStdString());
+                instrc[countt++]= item->text().toStdString();
+            } else {
+                qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
+            }
+        }
+    }
+
+     for (int j = 0; j < 64; ++j) {
+        for (int i = 1; i < 3; ++i) {
+            QTableWidgetItem *item = ui->tableWidget_2->item(j, i);
+            QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget_2->item(j, i - 1) : ui->tableWidget_2->item(j, i + 1);
+
+            if (item && item1) {
+                qDebug() << "Writing to memory:" << item1->text() << "->" << item->text();
+                controlunit.memory.write(item1->text().toStdString(), item->text().toStdString());
+                instrc[countt++]= item->text().toStdString();
+            } else {
+                qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
+            }
+        }
+    }
+
+    // read register
+
+    vector<char> regs {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+
+    for (int i = 0; i < 16; ++i) {
+        QTableWidgetItem *item = ui->tableWidget_3->item(i, 1);
+        if (item) {
+            qDebug() << "Writing to register:" << regs[i] << "->" << item->text();
+            controlunit.reg.write(regs[i], item->text().toStdString());
+        } else {
+            qDebug() << "Null item found at tableWidget_3(" << i << ", 1)";
+        }
+    }
+
     controlunit.loadProgram(instrc);
      while (true) {
         controlunit.executeNext();
@@ -302,8 +253,54 @@ void MainWindow::on_omar_clicked()
         }
     
      }
-    print_m();
-    print_r();
+   
+   // print memory
+
+   for (int j = 0; j < 64; ++j) {
+        for (int i = 1; i < 3; ++i) {
+            QTableWidgetItem *item = ui->tableWidget->item(j, i);
+            QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget->item(j, i - 1) : ui->tableWidget->item(j, i + 1);
+
+            if (item && item1) {
+                QString temp = QString::fromStdString(controlunit.memory.read(item1->text().toStdString()));
+                qDebug() << "Read from memory:" << item1->text() << "->" << temp;
+                item->setText(temp);
+            } else {
+                qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
+            }
+        }
+    }
+
+    for (int j = 0; j < 64; ++j) {
+        for (int i = 1; i < 3; ++i) {
+            QTableWidgetItem *item = ui->tableWidget_2->item(j, i);
+            QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget_2->item(j, i - 1) : ui->tableWidget_2->item(j, i + 1);
+
+            if (item && item1) {
+                QString temp = QString::fromStdString(controlunit.memory.read(item1->text().toStdString()));
+                qDebug() << "Read from memory:" << item1->text() << "->" << temp;
+                item->setText(temp);
+            } else {
+                qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
+            }
+        }
+    }
+
+}
+
+    // print register
+for (int i = 0; i < 16; ++i) {
+        QTableWidgetItem *item1 = ui->tableWidget_3->item(i, 1);
+        if (item1) {
+            QString temp = QString::fromStdString(controlunit.reg.read(regs[i]));
+            qDebug() << "Read from register:" << regs[i] << "->" << temp;
+            item1->setText(temp);
+        } else {
+            qDebug() << "Null item found at tableWidget_3(" << i << ", 1)";
+        }
+    }
+
+
     qDebug() << "Button clicked: on_omar_clicked()";
     map<int, string> mp;
     vector<string> v1 {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F"};
