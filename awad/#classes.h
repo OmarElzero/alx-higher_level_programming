@@ -444,7 +444,7 @@ public:
 
         char R = instr[1];
         string xy = instr.substr(2,2);
-        if (reg.read(R) == reg.read(0))
+        if (reg.read(R) == reg.read('0'))
         {
             programCounter = mp[xy];
 
@@ -455,7 +455,7 @@ public:
 
         char R = instr[1];
         string xy = instr.substr(2,2);
-        if (reg.read(R) > reg.read(0))
+        if (reg.read(R) > reg.read('0'))
         {
             programCounter = mp[xy];
         }
