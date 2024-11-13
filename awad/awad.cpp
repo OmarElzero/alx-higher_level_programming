@@ -244,6 +244,11 @@ void MainWindow::on_omar_clicked()
         MainWindow::on_reset_clicked();
         return;
     }
+    else if (input.size() < 4) {
+        QMessageBox::warning(this, "Input Error", "Wrong instruction: Input length less than 4 characters.");
+        MainWindow::on_reset_clicked();
+        return;
+    }
     else if (!regex_match(input.toStdString(), pattern)) {
         QMessageBox::warning(this, "Input Error", "Unknown opcode: Input should start with A, B, C, D, or a digit from 1 to 9.");
         MainWindow::on_reset_clicked();
@@ -274,6 +279,11 @@ void MainWindow::on_omar_clicked()
 
     if (input.size() > 4) {
         QMessageBox::warning(this, "Input Error", "Wrong instruction: Input length exceeds 4 characters.");
+        MainWindow::on_reset_clicked();
+        return;
+    }
+    else if (input.size() < 4) {
+        QMessageBox::warning(this, "Input Error", "Wrong instruction: Input length less than 4 characters.");
         MainWindow::on_reset_clicked();
         return;
     }
