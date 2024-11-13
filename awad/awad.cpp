@@ -274,7 +274,8 @@ void MainWindow::on_omar_clicked()
                 qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
             }
         }
-    regex pattern("^[A-D1-9][0-9A-F]{0,3}$");
+    std::regex pattern("^[A-D1-9]([0-9A-F]{0,3})?$");
+
     QString input = f; 
 
     if (input.size() > 4) {
