@@ -217,7 +217,8 @@ void MainWindow::on_omar_clicked()
         mp[i] = ans1[i];
     }
 
-    
+    regex pattern("^[A-D1-9][0-9A-F]{0,3}$");
+
     // read memory
     for (int j = 0; j < 64; ++j) {
         QString f = "";
@@ -236,16 +237,10 @@ void MainWindow::on_omar_clicked()
                 qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
             }
         }
-    regex pattern("^[A-D1-9][0-9A-F]{0,3}$");
-    QString input = f; 
+    QString input = f.trimmed(); 
 
-    if (input.size() > 4) {
-        QMessageBox::warning(this, "Input Error", "Wrong instruction: Input length exceeds 4 characters.");
-        MainWindow::on_reset_clicked();
-        return;
-    }
-    else if (input.size() < 4) {
-        QMessageBox::warning(this, "Input Error", "Wrong instruction: Input length less than 4 characters.");
+    if (input.size() != 4) {
+        QMessageBox::warning(this, "Input Error", "Wrong instruction: Input length Should be exactly 4 characters.");
         MainWindow::on_reset_clicked();
         return;
     }
@@ -274,17 +269,10 @@ void MainWindow::on_omar_clicked()
                 qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
             }
         }
-    std::regex pattern("^[A-D1-9]([0-9A-F]{0,3})?$");
+    QString input = f.trimmed(); 
 
-    QString input = f; 
-
-    if (input.size() > 4) {
-        QMessageBox::warning(this, "Input Error", "Wrong instruction: Input length exceeds 4 characters.");
-        MainWindow::on_reset_clicked();
-        return;
-    }
-    else if (input.size() < 4) {
-        QMessageBox::warning(this, "Input Error", "Wrong instruction: Input length less than 4 characters.");
+    if (input.size() != 4) {
+        QMessageBox::warning(this, "Input Error", "Wrong instruction: Input length Should be exactly 4 characters.");
         MainWindow::on_reset_clicked();
         return;
     }
