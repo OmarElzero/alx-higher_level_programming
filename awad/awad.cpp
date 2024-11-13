@@ -198,15 +198,10 @@ void MainWindow::fillTable() {
 
 }
 
- bool MainWindow::contains(char item) {
-string items = "ABCD123456789";
-        for (auto element : items) {
-            if (element == item) {
-                return true;
-            }
-        }
-        return false;
-    }
+bool MainWindow::contains(char item) {
+    static const std::unordered_set<char> items = {'A', 'B', 'C', 'D', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    return items.find(item) != items.end();
+}
 
 void MainWindow::on_omar_clicked()
 {
@@ -232,6 +227,7 @@ void MainWindow::on_omar_clicked()
     // read memory
     for (int j = 0; j < 64; ++j) {
         QString f = "";
+        string h = "";
         for (int i = 1; i < 3; ++i) {
             QTableWidgetItem *item = ui->tableWidget->item(j, i);
             QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget->item(j, i - 1) : ui->tableWidget->item(j, i + 1);
@@ -242,19 +238,20 @@ void MainWindow::on_omar_clicked()
 
                 QString s= item->text();
                 f+=s;
+                h+=item->text().toStdString();
 
             } else {
                 qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
             }
         }
-    QString input = f.trimmed(); 
+    String input = h; 
 
     if (input.size() != 4) {
         QMessageBox::warning(this, "Input Error", "Wrong instruction: Input length Should be exactly 4 characters.");
         MainWindow::on_reset_clicked();
         return;
     }
-    else if (contains(f[0])) {
+    else if (!contains(h[0])) {
         QMessageBox::warning(this, "Input Error", "Unknown opcode: Input should start with A, B, C, D, or a digit from 1 to 9.");
         MainWindow::on_reset_clicked();
         return;
@@ -279,14 +276,14 @@ void MainWindow::on_omar_clicked()
                 qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
             }
         }
-    QString input = f.trimmed(); 
+    String input = h; 
 
     if (input.size() != 4) {
         QMessageBox::warning(this, "Input Error", "Wrong instruction: Input length Should be exactly 4 characters.");
         MainWindow::on_reset_clicked();
         return;
     }
-     else if (contains(f[0])) {
+    else if (!contains(h[0])) {
         QMessageBox::warning(this, "Input Error", "Unknown opcode: Input should start with A, B, C, D, or a digit from 1 to 9.");
         MainWindow::on_reset_clicked();
         return;
