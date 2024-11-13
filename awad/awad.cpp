@@ -198,6 +198,16 @@ void MainWindow::fillTable() {
 
 }
 
+ bool MainWindow::contains(char item) {
+string items = "ABCD123456789";
+        for (auto element : items) {
+            if (element == item) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 void MainWindow::on_omar_clicked()
 {
     map<int, string> mp;
@@ -244,7 +254,7 @@ void MainWindow::on_omar_clicked()
         MainWindow::on_reset_clicked();
         return;
     }
-    else if (!regex_match(input.toStdString(), pattern)) {
+    else if (contains(f[0])) {
         QMessageBox::warning(this, "Input Error", "Unknown opcode: Input should start with A, B, C, D, or a digit from 1 to 9.");
         MainWindow::on_reset_clicked();
         return;
@@ -276,7 +286,7 @@ void MainWindow::on_omar_clicked()
         MainWindow::on_reset_clicked();
         return;
     }
-    else if (!regex_match(input.toStdString(), pattern)) {
+     else if (contains(f[0])) {
         QMessageBox::warning(this, "Input Error", "Unknown opcode: Input should start with A, B, C, D, or a digit from 1 to 9.");
         MainWindow::on_reset_clicked();
         return;
