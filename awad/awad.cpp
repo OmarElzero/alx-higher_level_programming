@@ -257,11 +257,13 @@ void MainWindow::on_omar_clicked()
         return;
     }
         instrc[countt++]=f.toStdString();
+       
 
     }
 
     for (int j = 0; j < 64; ++j) {
         QString f = "";
+        string h = "";
         for (int i = 1; i < 3; ++i) {
             QTableWidgetItem *item = ui->tableWidget_2->item(j, i);
             QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget_2->item(j, i - 1) : ui->tableWidget_2->item(j, i + 1);
@@ -271,11 +273,14 @@ void MainWindow::on_omar_clicked()
                 controlunit.memory.write(item1->text().toStdString(), item->text().toStdString());
                 QString s= item->text();
                 f+=s;
+                 h+=item->text().toStdString();
 
             } else {
                 qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
             }
         }
+         qDebug() << "H is Equal to : (" << h ")";
+        
     String input = h; 
 
     if (input.size() != 4) {
