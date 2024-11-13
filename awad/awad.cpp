@@ -50,6 +50,9 @@ MainWindow::MainWindow(QWidget *parent)
             background-color: #DF6951;\
     }\
 \
+        QPushButton:hover::after {\
+            transform: translate(-50%, -50%) scale(1);\
+    }\
         QListWidget#listWidget_6 ,#listWidget_5{\
             background-color: #282c34;\
             border: none;\
@@ -77,13 +80,7 @@ MainWindow::MainWindow(QWidget *parent)
     }\
         QTableWidget {\
             border-radius: 8px ;\
-            background-color: #282c34;\
-    }\
-    "
-    ;
-        QPushButton *button1 = ui->omar , *button2 = ui->reset;
-        button1->setCursor(Qt::PointingHandCursor);
-        button2->setCursor(Qt::PointingHandCursor);
+    }";
         this->setStyleSheet(styleSheet);
 }
 
@@ -91,6 +88,9 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
+
 
 void MainWindow::fillTable() {
 
@@ -108,7 +108,6 @@ void MainWindow::fillTable() {
     int colCount = 4;
     ui->tableWidget->setRowCount(rowCount);
     ui->tableWidget->setColumnCount(colCount);
-
 
     for (int i = 0; i < 16; i++) {
         if (!ui->tableWidget_3->item(i, 1)) {
@@ -198,11 +197,6 @@ void MainWindow::fillTable() {
 
 }
 
-bool MainWindow::contains(char item) {
-    static const std::unordered_set<char> items = {'A', 'B', 'C', 'D', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    return items.find(item) != items.end();
-}
-
 void MainWindow::on_omar_clicked()
 {
     map<int, string> mp;
@@ -221,13 +215,9 @@ void MainWindow::on_omar_clicked()
     for (int i = 0; i < ans1.size(); ++i) {
         mp[i] = ans1[i];
     }
-
-    regex pattern("^[A-D1-9][0-9A-F]{0,3}$");
-
     // read memory
     for (int j = 0; j < 64; ++j) {
         QString f = "";
-        string h = "";
         for (int i = 1; i < 3; ++i) {
             QTableWidgetItem *item = ui->tableWidget->item(j, i);
             QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget->item(j, i - 1) : ui->tableWidget->item(j, i + 1);
@@ -238,32 +228,17 @@ void MainWindow::on_omar_clicked()
 
                 QString s= item->text();
                 f+=s;
-                h+=item->text().toStdString();
 
             } else {
                 qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
             }
         }
-    String input = h; 
-
-    if (input.size() != 4) {
-        QMessageBox::warning(this, "Input Error", "Wrong instruction: Input length Should be exactly 4 characters.");
-        MainWindow::on_reset_clicked();
-        return;
-    }
-    // else if (!contains(h[0])) {
-    //     QMessageBox::warning(this, "Input Error", "Unknown opcode: Input should start with A, B, C, D, or a digit from 1 to 9.");
-    //     MainWindow::on_reset_clicked();
-    //     return;
-    // }
         instrc[countt++]=f.toStdString();
-       
 
     }
 
     for (int j = 0; j < 64; ++j) {
         QString f = "";
-        string h = "";
         for (int i = 1; i < 3; ++i) {
             QTableWidgetItem *item = ui->tableWidget_2->item(j, i);
             QTableWidgetItem *item1 = (i == 1) ? ui->tableWidget_2->item(j, i - 1) : ui->tableWidget_2->item(j, i + 1);
@@ -273,27 +248,11 @@ void MainWindow::on_omar_clicked()
                 controlunit.memory.write(item1->text().toStdString(), item->text().toStdString());
                 QString s= item->text();
                 f+=s;
-                 h+=item->text().toStdString();
 
             } else {
                 qDebug() << "Null item found at tableWidget(" << j << ", " << i << ")";
             }
         }
-         qDebug() << "H is Equal to : (" << h ")";
-        
-    String input = h; 
-
-    if (input.size() != 4) {
-        QMessageBox::warning(this, "Input Error", "Wrong instruction: Input length Should be exactly 4 characters.");
-        MainWindow::on_reset_clicked();
-        return;
-    }
-    // else if (!contains(h[0])) {
-    //     QMessageBox::warning(this, "Input Error", "Unknown opcode: Input should start with A, B, C, D, or a digit from 1 to 9.");
-    //     MainWindow::on_reset_clicked();
-    //     return;
-    // }
-        
         instrc[countt++]=f.toStdString();
     }
 
@@ -313,12 +272,12 @@ void MainWindow::on_omar_clicked()
 
     controlunit.loadProgram(instrc);
     while (true) {
+        controlunit.executeNext();
         if(controlunit.instructions[controlunit.programCounter]=="C000")
         {
             QMessageBox::critical(this, "Halt", "Halt Execution!");
             break ;
         }
-        controlunit.executeNext();
         if (controlunit.programCounter >= controlunit.instructions.size()) {
             break;
         }
@@ -383,7 +342,6 @@ void MainWindow::on_reset_clicked()
 {
     controlunit.reset();
     MainWindow::fillTable() ;
-    countt = 0 ;
-    qDebug() << "Control Unit has been reset";
-
+    countt = 0;
 }
+

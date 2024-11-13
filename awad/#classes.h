@@ -28,8 +28,7 @@ public:
 
     Memory() : memory(256, "00") {}
     void clear() {
-        memory.clear();
-        memory.resize(256,"00") ;
+        fill(memory.begin(), memory.end(), 0);
     }
 
     string read(string address) {
@@ -58,8 +57,7 @@ public:
 
     Register() : registers(16, "00") {}
     void clear() {
-        registers.clear();
-        registers.resize(16,"00") ;
+        fill(registers.begin(), registers.end(), 0);
     }
 
     string read(char reg) {
@@ -446,7 +444,7 @@ public:
 
         char R = instr[1];
         string xy = instr.substr(2,2);
-        if (reg.read(R) == reg.read('0'))
+        if (reg.read(R) == reg.read(0))
         {
             programCounter = mp[xy];
 
@@ -457,11 +455,13 @@ public:
 
         char R = instr[1];
         string xy = instr.substr(2,2);
-        if (reg.read(R) > reg.read('0'))
+        if (reg.read(R) > reg.read(0))
         {
             programCounter = mp[xy];
         }
     }
+
+
 
 };
 #endif // CLASSES_H
