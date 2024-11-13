@@ -251,11 +251,11 @@ void MainWindow::on_omar_clicked()
         MainWindow::on_reset_clicked();
         return;
     }
-    else if (!contains(h[0])) {
-        QMessageBox::warning(this, "Input Error", "Unknown opcode: Input should start with A, B, C, D, or a digit from 1 to 9.");
-        MainWindow::on_reset_clicked();
-        return;
-    }
+    // else if (!contains(h[0])) {
+    //     QMessageBox::warning(this, "Input Error", "Unknown opcode: Input should start with A, B, C, D, or a digit from 1 to 9.");
+    //     MainWindow::on_reset_clicked();
+    //     return;
+    // }
         instrc[countt++]=f.toStdString();
        
 
@@ -288,11 +288,11 @@ void MainWindow::on_omar_clicked()
         MainWindow::on_reset_clicked();
         return;
     }
-    else if (!contains(h[0])) {
-        QMessageBox::warning(this, "Input Error", "Unknown opcode: Input should start with A, B, C, D, or a digit from 1 to 9.");
-        MainWindow::on_reset_clicked();
-        return;
-    }
+    // else if (!contains(h[0])) {
+    //     QMessageBox::warning(this, "Input Error", "Unknown opcode: Input should start with A, B, C, D, or a digit from 1 to 9.");
+    //     MainWindow::on_reset_clicked();
+    //     return;
+    // }
         
         instrc[countt++]=f.toStdString();
     }
